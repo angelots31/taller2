@@ -1,0 +1,15 @@
+# Archivos de configuración local y credenciales
+.env
+
+# Entornos virtuales
+venv/
+env/
+ENV/
+
+# Caché de Python
+__pycache__/
+*.py[cod]
+
+# Carpetas de VS Code u otros editores
+.vscode/
+.idea/
