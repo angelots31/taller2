@@ -3,3 +3,4 @@ motor
 uvicorn
 pydantic
 python-dotenv
+email-validator
