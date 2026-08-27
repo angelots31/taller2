@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}TechGear{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'catalogo/styles.css' %}">
+</head>
+<body>
+    <div class="app">
+        <nav class="nav">
+            <div class="nav-inner">
+                <a href="{% url 'index' %}" class="brand">
+                    <span class="brand-icon">⬡</span> TechGear
+                </a>
+                <div class="nav-links">
+                    <a href="{% url 'index' %}" class="nav-link {% block nav_productos %}{% endblock %}">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                        Catálogo
+                    </a>
+                    <a href="{% url 'listar_pedidos' %}" class="nav-link {% block nav_pedidos %}{% endblock %}">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                        Pedidos
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <main class="container">
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <div class="toast toast-{{ message.tags }}" role="alert">
+                    <span class="toast-icon">
+                        {% if message.tags == 'success' %}✓{% elif message.tags == 'error' %}✕{% else %}ℹ{% endif %}
+                    </span>
+                    <span class="toast-text">{{ message }}</span>
+                    <button class="toast-close" onclick="this.parentElement.remove()">×</button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% block content %}{% endblock %}
+        </main>
+
+        <footer class="footer">
+            <p>TechGear — Sistema de Gestión de Tienda</p>
+        </footer>
+    </div>
+
+    <script>
+    // Auto-cerrar mensajes después de 5 segundos
+    document.querySelectorAll('.toast').forEach(function(toast) {
+        setTimeout(function() {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateY(-10px)';
+            setTimeout(function() { toast.remove(); }, 300);
+        }, 5000);
+    });
+    </script>
+</body>
+</html>

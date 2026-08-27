@@ -11,4 +11,6 @@ urlpatterns = [
     # Rutas de Pedidos
     path('pedidos/', views.listar_pedidos, name='listar_pedidos'),
     path('pedidos/crear/', views.crear_pedido, name='crear_pedido'),
+    path('pedidos/eliminar/<str:pedido_id>/', views.eliminar_pedido, name='eliminar_pedido'),
+    path('pedidos/estado/<str:pedido_id>/', views.cambiar_estado_pedido, name='cambiar_estado_pedido'),
 ]
