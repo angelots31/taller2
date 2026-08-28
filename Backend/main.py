@@ -66,7 +66,7 @@ def validate_object_id(oid: str, label: str = "ID"):
 
 @app.get("/", tags=["Inicio"], summary="Mensaje de Bienvenida")
 async def root():
-    return {"mensaje": "¡Bienvenido a la API REST de TechGear!", "version": "2.0"}
+    return {"mensaje": "¡Bienvenido a la API REST - Tienda Virtual!", "version": "2.0"}
 
 
 # ==================== CRUD PRODUCTOS ====================
