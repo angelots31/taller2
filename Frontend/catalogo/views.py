@@ -292,14 +292,14 @@ def subir_imagen(request):
     if not archivo:
         return JsonResponse({'error': 'No se envió ningún archivo'}, status=400)
 
-    # Validar tipo de archivo
-    tipos_permitidos = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml']
-    if archivo.content_type not in tipos_permitidos:
-        return JsonResponse({'error': 'Tipo de archivo no permitido. Usa JPG, PNG, GIF, WebP o SVG.'}, status=400)
+    # Validar que sea imagen (acepta cualquier tipo de imagen)
+    if not archivo.content_type or not archivo.content_type.startswith('image/'):
+        return JsonResponse({'error': 'El archivo debe ser una imagen.'}, status=400)
 
-    # Validar tamaño (max 5MB)
-    if archivo.size > 5 * 1024 * 1024:
-        return JsonResponse({'error': 'El archivo es demasiado grande (máximo 5MB).'}, status=400)
+    # Validar tamaño (max 50MB)
+    MAX_SIZE = 50 * 1024 * 1024  # 50 MB
+    if archivo.size > MAX_SIZE:
+        return JsonResponse({'error': 'El archivo es demasiado grande (máximo 50MB).'}, status=400)
 
     # Guardar con nombre único
     ext = archivo.name.rsplit('.', 1)[-1].lower()
