@@ -1,6 +1,6 @@
 {% extends "catalogo/base.html" %}
 
-{% block title %}TechGear — Catálogo{% endblock %}
+{% block title %}TiendaOnline — Catálogo{% endblock %}
 {% block nav_productos %}active{% endblock %}
 
 {% block content %}
@@ -69,8 +69,8 @@
         </div>
         <div class="card-actions">
             <a href="{% url 'editar_producto' p.id %}" class="btn btn-ghost btn-sm">Editar</a>
-            <a href="{% url 'eliminar_producto' p.id %}" class="btn btn-danger-ghost btn-sm"
-               onclick="return confirm('¿Eliminar \"{{ p.nombre }}\"? Esta acción no se puede deshacer.')">Eliminar</a>
+                <a href="{% url 'eliminar_producto' p.id %}" class="btn btn-danger-ghost btn-sm"
+                    onclick="return confirm('¿Eliminar {{ p.nombre|escapejs }}? Esta acción no se puede deshacer.')">Eliminar</a>
         </div>
     </div>
     {% endfor %}

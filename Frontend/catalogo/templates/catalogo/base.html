@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}TechGear{% endblock %}</title>
+    <title>{% block title %}TiendaOnline{% endblock %}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'catalogo/styles.css' %}">
@@ -14,7 +14,7 @@
         <nav class="nav">
             <div class="nav-inner">
                 <a href="{% url 'index' %}" class="brand">
-                    <span class="brand-icon">⬡</span> TechGear
+                    <span class="brand-icon">⬡</span> TiendaOnline
                 </a>
                 <div class="nav-links">
                     <a href="{% url 'index' %}" class="nav-link {% block nav_productos %}{% endblock %}">
@@ -48,7 +48,7 @@
         </main>
 
         <footer class="footer">
-            <p>TechGear — Sistema de Gestión de Tienda</p>
+            <p>TiendaOnline — Sistema de Gestión de Tienda</p>
         </footer>
     </div>
 
