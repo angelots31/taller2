@@ -1,6 +1,9 @@
 # Archivos de configuración local y credenciales
 .env
 
+# Archivos subidos por usuarios
+media/
+
 # Entornos virtuales
 venv/
 env/

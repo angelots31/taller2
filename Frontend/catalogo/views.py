@@ -1,7 +1,10 @@
 import os
+import uuid
 import requests
 from django.contrib import messages
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
+from django.core.files.storage import default_storage
 
 API_URL_BASE = os.getenv("API_URL_BASE", "https://taller2-4heu.onrender.com")
 API_URL_PRODUCTOS = f"{API_URL_BASE}/productos"
@@ -274,5 +277,34 @@ def cambiar_estado_pedido(request, pedido_id):
     elif response.status_code == 200:
         messages.success(request, f"Estado del pedido actualizado a '{estado}'.")
     else:
-        messages.error(request, detalle_error(response, "No se pudo actualizar el estado."))
+        messages.error(request, "No se pudo actualizar el estado.")
     return redirect('listar_pedidos')
+
+
+# ==================== UPLOAD DE IMAGEN ====================
+
+def subir_imagen(request):
+    """Recibe un archivo de imagen y lo guarda, devolviendo la URL."""
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+    archivo = request.FILES.get('imagen')
+    if not archivo:
+        return JsonResponse({'error': 'No se envió ningún archivo'}, status=400)
+
+    # Validar tipo de archivo
+    tipos_permitidos = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml']
+    if archivo.content_type not in tipos_permitidos:
+        return JsonResponse({'error': 'Tipo de archivo no permitido. Usa JPG, PNG, GIF, WebP o SVG.'}, status=400)
+
+    # Validar tamaño (max 5MB)
+    if archivo.size > 5 * 1024 * 1024:
+        return JsonResponse({'error': 'El archivo es demasiado grande (máximo 5MB).'}, status=400)
+
+    # Guardar con nombre único
+    ext = archivo.name.rsplit('.', 1)[-1].lower()
+    nombre_unico = f"productos/{uuid.uuid4().hex}.{ext}"
+    ruta_guardada = default_storage.save(nombre_unico, archivo)
+    url_imagen = default_storage.url(ruta_guardada)
+
+    return JsonResponse({'url': url_imagen})
